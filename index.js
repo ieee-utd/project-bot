@@ -3,7 +3,6 @@ const Discord = require("discord.js");
 //const config = require("./config.json");
 
 const client = new Discord.Client();                                        //For interacting with the Discord API. This client represents the discord bot.
-console.log(process.env.BOT_TOKEN);
 
 
 //--------------------------------------------Command Parser---------------------------------------
