@@ -1,14 +1,14 @@
 let ieee = require("./ieeeCall");                                           //Import ieeeCall.js
 require('dotenv').config();
 const Discord = require("discord.js");
-//const config = require("./config.json");
+const config = require("./config.json");                                    //For local testing
 
 const client = new Discord.Client();                                        //For interacting with the Discord API. This client represents the discord bot.
 
 
 //--------------------------------------------Command Parser---------------------------------------
-const prefix = "!";                                                         //Sets the prefix
-client.on("message", function(message) { 
+const prefix = "<:forge:771148728919916544>";                                                         //Sets the prefix
+client.on("message", async function(message) { 
     if (message.author.bot) return;                                         //Verifies that the author of the message is a bot
     if (!message.content.startsWith(prefix)) return;                        //Verifies that the message begins with "!"
     
@@ -28,9 +28,11 @@ client.on("message", function(message) {
     }
 
     if (command == "events") {
-        message.reply(ieee.listEvents());
+        const events = await ieee.listEvents()
+        message.reply(`Request Received:\n ${events}`); // format appropriately here
     }
 });       
 
 
-client.login(process.env.BOT_TOKEN);                                             //Login method for having the Discord API identify the bot
+//client.login(process.env.BOT_TOKEN);                                             //Login method for having the Discord API identify the bot via env variables, for Heroku
+client.login(config.BOT_TOKEN);                                                    //Login for local testing
