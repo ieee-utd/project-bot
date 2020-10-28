@@ -1,3 +1,4 @@
+let ieee = require("./ieeeCall");                                           //Import ieeeCall.js
 require('dotenv').config();
 const Discord = require("discord.js");
 //const config = require("./config.json");
@@ -24,6 +25,10 @@ client.on("message", function(message) {
 
     if (command == "intro") {
         message.reply("Hello, I am IEEE's Learning Assistant. You can call me ILA.");
+    }
+
+    if (command == "events") {
+        message.reply(ieee.listEvents());
     }
 });       
 
