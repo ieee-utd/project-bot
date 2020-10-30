@@ -1,0 +1,26 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "types": ["node"],
+        "target": "es6",
+        "lib": [
+            "es6",
+            "es2015.promise",
+            "dom"
+        ],
+        "sourceMap": true,
+        "alwaysStrict": true,
+        "strictNullChecks": true,
+        "noImplicitAny": true,
+        "noImplicitReturns": true,
+        "noUnusedLocals": true,
+        "plugins": [
+            { "name": "tslint-language-service"}
+        ],
+        "outDir": "dist"
+    },
+    "types": ["node"],
+    "include": [
+        "src/**/*"
+    ]
+}

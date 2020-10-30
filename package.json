@@ -1,15 +1,51 @@
 {
-  "name": "discordbot",
+  "name": "project-bot",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "A Discord bot for the IEEE UTD server. Developed by Forge teams.",
+  "repository": "git@github.com:ieee-utd/project-bot.git",
+  "author": "Forge - IEEE UTD <forge@ieeeutd.org>",
+  "license": "MIT",
+  "private": true,
+  "main": "dist/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "NODE_ENV=development node node_modules/gulp/bin/gulp.js",
+    "build": "NODE_ENV=production node node_modules/gulp/bin/gulp.js build",
+    "run": "NODE_ENV=production node dist/app.js",
+    "precommit": "lint-staged"
   },
-  "author": "",
-  "license": "ISC",
+  "lint-staged": {
+    "src/**/*.+(ts|js)": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn precommit"
+    }
+  },
+  "nodemonConfig": {
+    "watch": [
+      "src/*"
+    ]
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.6",
+    "@types/ws": "^7.2.9",
+    "@typescript-eslint/eslint-plugin": "^4.6.0",
+    "@typescript-eslint/parser": "^4.6.0",
+    "del": "^6.0.0",
+    "eslint": "^7.12.1",
+    "gulp": "^4.0.2",
+    "gulp-nodemon": "^2.5.0",
+    "gulp-typescript": "^6.0.0-alpha.1",
+    "gulp-uglify": "^3.0.2",
+    "nodemon": "^2.0.6",
+    "typescript": "^4.0.5",
+    "uglify-es": "^3.3.9"
+  },
   "dependencies": {
+    "axios": "^0.21.0",
     "discord.js": "^12.3.1",
     "dotenv": "^8.2.0"
   }
