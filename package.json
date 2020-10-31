@@ -8,7 +8,7 @@
   "private": true,
   "main": "dist/app.js",
   "scripts": {
-    "start": "NODE_ENV=development node node_modules/gulp/bin/gulp.js",
+    "start": "node node_modules/gulp/bin/gulp.js",
     "build": "NODE_ENV=production node node_modules/gulp/bin/gulp.js build",
     "run": "NODE_ENV=production node dist/app.js",
     "precommit": "lint-staged"
