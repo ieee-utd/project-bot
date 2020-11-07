@@ -15,15 +15,7 @@ const botChannelID = "773445176831639552";        //Channel ID for bot channel i
 client.on("message", async function (message) {
   console.log("received a message");
   if (message.author.bot) return;                                         //Verifies that the author of the message is a bot
-  if (!message.content.startsWith(prefix)) return;                        //Verifies that the message begins with the prefix
-  // if (!message.content.startsWith(prefix))
-  // {
-  //   if(adminAllowed)
-  //     prefix = message.content;
-  //     adminAllowed = false;
-  // }
-  // else 
-  //   return;            
+  if (!message.content.startsWith(prefix)) return;                        //Verifies that the message begins with the prefix        
 
 
 
@@ -67,7 +59,6 @@ client.on("message", async function (message) {
       if(adminChannel(message.channel.id))
       {
         message.reply("Please enter your desired prefix:");
-        //adminAllowed = true;
       }
       break;
   
