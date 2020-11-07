@@ -1,11 +1,26 @@
 
 const ieee = require("axios");
 
+interface EventData {
+  data: {
+    dates: {
+      month: number,
+      day: number,
+      events: {
+        startTime: Date,
+        locationUrl: string,
+        title: string,
+        locationName: string,
+        tags: string[]
+      }[]
+    }[]
+  }
+}
 
 export async function listEvents() 
 {
   try {
-    const response = await ieee.get("https://ieeeutd.org/api/events");
+    const response: EventData = await ieee.get("https://ieeeutd.org/api/events");
     console.log(response.data.dates[0].events);
 
 
@@ -18,7 +33,7 @@ export async function listEvents()
     //Compare today with the date of the next event
     if(todaysDate != response.data.dates[0].day)
     {
-      eventsToday += "Sorry, there are no events today \n **Here are other events coming up on " + nextEventsDay + "!**\n"; 
+      eventsToday += `There are no events today\n**Here are other events coming up on ${nextEventsDay}!**\n`; 
     }
     else if(todaysDate == response.data.dates[0].day)
     {
@@ -36,6 +51,8 @@ export async function listEvents()
         //date calculation for time: line
         const actualDateObject = new Date(response.data.dates[0].events[eventCounter].startTime);
         console.log(actualDateObject);
+
+        //Replace with Date library
 
         let actualHour = actualDateObject.getHours();
         console.log(actualHour);
@@ -69,9 +86,12 @@ export async function listEvents()
 
         eventsToday += "\n\t" + "Time: " + actualHour + ":" + actualTime + " " + actualAMPM;
         
+        
         //Platform of event + url link
-        eventsToday += "\n\t\t\t" + response.data.dates[0].events[eventCounter].locationName + ": <"
-         + response.data.dates[0].events[eventCounter].locationUrl +">";
+        eventsToday += "\n\t\t\t" + response.data.dates[0].events[eventCounter].locationName;
+
+         if(response.data.dates[0].events[eventCounter].locationUrl != "")
+          eventsToday += ": <" + response.data.dates[0].events[eventCounter].locationUrl +">";
         
 
          //Ping subscribers for notifications

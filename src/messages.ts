@@ -9,13 +9,22 @@ import { listEvents } from "./helpers/events";
 
 
 let  prefix = "!";                                //Sets the prefix
-const botChannelID = "773445176831639552";        //Channel ID for bot channel. This may have to be changed when deployed to IEEE's server
-
+const botChannelID = "773445176831639552";        //Channel ID for bot channel in testing server. This may have to be changed when deployed to IEEE's server
+//let adminAllowed = false;
 
 client.on("message", async function (message) {
   console.log("received a message");
   if (message.author.bot) return;                                         //Verifies that the author of the message is a bot
   if (!message.content.startsWith(prefix)) return;                        //Verifies that the message begins with the prefix
+  // if (!message.content.startsWith(prefix))
+  // {
+  //   if(adminAllowed)
+  //     prefix = message.content;
+  //     adminAllowed = false;
+  // }
+  // else 
+  //   return;            
+
 
 
   const commandBody = message.content.slice(prefix.length);               //Removes prefix from message content
@@ -28,17 +37,17 @@ client.on("message", async function (message) {
 
   //setInterval(eventScheduler, 86400000);
 
-  let pingDescription ="Returns elapsed time to travel to/from bot";
-  let introDescription ="Gives brief introduction about the bot";
-  let eventsDescription ="Lists upcoming events";
-  let edit_prefixDescription = "ADMIN COMMAND - Changes the prefix of commands"
-  let testDescription ="don't use this unless ur me or something";
-  let helpDescription ="You already know what this does";
+  const pingDescription ="Returns elapsed time to travel to/from bot";
+  const introDescription ="Gives brief introduction about the bot";
+  const eventsDescription ="Lists upcoming events";
+  const edit_prefixDescription = "ADMIN COMMAND - Changes the prefix of commands";
+  const testDescription ="don't use this unless ur me or something";
+  const helpDescription ="You already know what this does";
 
 
 
-  let commands = ["ping", "intro", "events", "edit_prefix", "test", "help"];
-  let commandsDescription = [pingDescription, introDescription, eventsDescription, edit_prefixDescription, testDescription, helpDescription];
+  const commands = ["ping", "intro", "events", "edit_prefix", "test", "help"];
+  const commandsDescription = [pingDescription, introDescription, eventsDescription, edit_prefixDescription, testDescription, helpDescription];
 
   
   switch (command) {
@@ -58,7 +67,7 @@ client.on("message", async function (message) {
       if(adminChannel(message.channel.id))
       {
         message.reply("Please enter your desired prefix:");
-          
+        //adminAllowed = true;
       }
       break;
   
