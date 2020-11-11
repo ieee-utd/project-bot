@@ -1,21 +1,42 @@
 
 const ieee = require("axios");
 
+
 interface EventData {
   data: {
-    dates: {
-      month: number,
-      day: number,
-      events: {
-        startTime: Date,
-        locationUrl: string,
-        title: string,
-        locationName: string,
-        tags: string[]
-      }[]
-    }[]
+        dates: {
+          events: {
+            _id: number,
+            reservationRequired: boolean;
+            recurrenceRule: string;
+            tags: string[],
+            title: string,
+            startTime: Date,
+            endTime: Date,
+            locationName: string,
+            locationUrl: string,
+            link: string;
+            createdOn: Date;
+          }[]
+          date: Date,
+          day: number,
+          month: string,
+          year: number
+        }[]
   }
 }
+
+function formatAMPM(passedDate: Date) {
+  var hours = passedDate.getHours();
+  var minutes: number = passedDate.getMinutes();
+  var ampm = hours >= 12 ? 'pm' : 'am';
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  var minutesString= minutes < 10 ? '0'+ minutes : minutes;
+  var strTime = hours + ':' + minutesString + ' ' + ampm;
+  return strTime;
+}
+
 
 export async function listEvents() 
 {
@@ -50,41 +71,8 @@ export async function listEvents()
 
         //date calculation for time: line
         const actualDateObject = new Date(response.data.dates[0].events[eventCounter].startTime);
-        console.log(actualDateObject);
 
-        //Replace with Date library
-
-        let actualHour = actualDateObject.getHours();
-        console.log(actualHour);
-
-        const actualTime = actualDateObject.getMinutes();
-        console.log(actualTime);
-        let actualAMPM = "";
-
-        if(actualHour == 0)
-        {
-          actualHour = 12;
-          actualAMPM = "AM";
-        }
-        else if(actualHour<12)
-        {
-        
-          actualAMPM = "AM";
-        }
-        else if(actualHour == 12)
-        {
-          actualHour = 12;
-          actualAMPM = "PM";
-        }
-        else if(actualHour > 12)
-        {
-          actualHour = actualHour - 12;
-          actualAMPM = "PM";
-        }
-
-        //not done
-
-        eventsToday += "\n\t" + "Time: " + actualHour + ":" + actualTime + " " + actualAMPM;
+        eventsToday += "\n\t" + "Time: " + formatAMPM(actualDateObject);
         
         
         //Platform of event + url link
