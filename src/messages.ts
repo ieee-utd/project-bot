@@ -8,7 +8,7 @@ import { listEvents } from "./helpers/events";
 
 
 
-let  prefix = "!";                                //Sets the prefix
+const  prefix = "!";                                //Sets the prefix
 const botChannelID = "773445176831639552";        //Channel ID for bot channel in testing server. This may have to be changed when deployed to IEEE's server
 //let adminAllowed = false;
 
@@ -71,6 +71,7 @@ client.on("message", async function (message) {
     //      * Find a way to read the user's next input, and assign it to prefix variable
     
     case "help":
+    {
       let helpReply ="**Here are some recognized commands**\n";
 
       for (let i=0; i< commands.length; i++)
@@ -80,6 +81,7 @@ client.on("message", async function (message) {
 
       message.reply(helpReply);
       break;
+    }
 
     default:
       message.reply("Command not recognized, please try again or type !help for more");
