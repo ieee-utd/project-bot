@@ -42,6 +42,4 @@ async function scheduleAnnouncements() {
 //   // send the announcement
 // }
 
-
-const cronJob = schedule.scheduleJob("*/10 * * * * *", scheduleAnnouncements);
-cronJob.start();
+schedule.scheduleJob("*/10 * * * * *", scheduleAnnouncements);
