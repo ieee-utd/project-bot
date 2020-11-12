@@ -8,20 +8,9 @@ import { formatEvents } from "./helpers/ieeeEvent";
 const prefix = process.env.BOT_PREFIX || "!";                             //Sets the prefix
 
 const commands: { [command: string]: { description: string, func: Function } } = {
-  "ping": { description: "Returns elapsed time to travel to/from bot", func: getPing },
-  "intro": { description: "Gives brief introduction about the bot", func: getIntro },
   "events": { description: "Lists upcoming events", func: getEvents },
-  "test": { description: "don't use this unless ur me or something", func: () => { } },
   "help": { description: "You already know what this does", func: getHelp }
 };
-
-function getPing(message: Message) {
-  message.reply(`Pong! This message had a latency of ${Date.now() - message.createdTimestamp}ms.`);
-}
-
-function getIntro(message: Message) {
-  message.reply("Hello, I am IEEE's Learning Assistant. You can call me ILA.");
-}
 
 async function getEvents(message: Message) {
   const eventList = await getIeeeEvents();
@@ -45,7 +34,7 @@ function sendError(message: Message) {
 }
 
 client.on("message", async function (message) {
-  console.log("received a message");
+  // console.log("received a message");
   if (message.author.bot) return;                                         //Verifies that the author of the message is not a bot
   if (!message.content.startsWith(prefix)) return;                        //Verifies that the message begins with the prefix        
 
@@ -62,30 +51,3 @@ client.on("message", async function (message) {
     message.reply("Command not recognized, please try again or type !help for more");
   }
 });
-
-
-// ON HOLD
-
-/*****************************************************************************************************
-* Function:   adminChannel (currentChannel:string)
-*
-* Descr:      This function takes the current channel from the user and verifies whether it is the
-*             bot channel, which may be restricted to admins
-*
-* Input:      currentChannel - the expected value is from "message.channel.id" in the command
-*             parsing function
-*
-* Return:     vertification - A boolean value indicating whether the channel is the bot channel
-*****************************************************************************************************/
-// const botChannelID = process.env.BOT_PREFIX || "773445176831639552";        //Channel ID for bot channel in testing server. This may have to be changed when deployed to IEEE's server
-//let adminAllowed = false;
-
-// function adminChannel (currentChannel:string)
-// {
-
-//   let verification = false;
-//   if(currentChannel == botChannelID)
-//     verification = true;
-
-//   return verification;
-// }
