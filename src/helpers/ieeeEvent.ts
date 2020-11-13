@@ -50,9 +50,8 @@ export function eventToString(event: Event_IEEE) {
   str += `\t:fire: ${event.title}`;
 
   //date calculation for time: line
-  const actualDateObject = new Date(event.startTime);
-
-  str += "\n\t" + "Time: " + actualDateObject.toLocaleString();
+  const actualDateObject = DateTime.fromISO(event.startTime);
+  str += "\n\t" + "Time: " + actualDateObject.toLocaleString(DateTime.TIME_SIMPLE);
 
   //Platform of event + url link
   str += `\n\t\t\t${event.locationName}`;
