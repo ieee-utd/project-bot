@@ -38,9 +38,9 @@ client.on("message", async function (message) {
   if (message.author.bot) return;                                         //Verifies that the author of the message is not a bot
   if (!message.content.startsWith(BOT_PREFIX)) return;                        //Verifies that the message begins with the prefix        
 
-  const commandBody = message.content.slice(BOT_PREFIX.length);               //Removes prefix from message content
+  const commandBody = message.content.slice(BOT_PREFIX.length).trim();               //Removes prefix from message content
   const args = commandBody.split(" ");                                    //Results in an array containing command name (and potential arguments)  
-  const command = args.shift()?.toLowerCase().trim();                            //Removes first element from args array (command name). Leaves only arguments in the array
+  const command = args.shift()?.toLowerCase();                            //Removes first element from args array (command name). Leaves only arguments in the array
   if (!command)
     return;
 
