@@ -5,7 +5,7 @@ import { client } from "./app";
 import { getIeeeEvents } from "./helpers/rest";
 import { formatEvents } from "./helpers/ieeeEvent";
 
-const prefix = process.env.BOT_PREFIX || "!";                             //Sets the prefix
+export const BOT_PREFIX = process.env.BOT_PREFIX || "!";                             //Sets the prefix
 
 const commands: { [command: string]: { description: string, func: Function } } = {
   "events": { description: "Lists upcoming events", func: getEvents },
@@ -24,7 +24,7 @@ function getHelp(message: Message) {
 
   const helpReply = "**Here are some recognized commands**\n";
   const descriptions = Object.keys(commands).map((key) => {
-    return "**" + prefix + key + "**: " + commands[key].description;
+    return "**" + BOT_PREFIX + key + "**: " + commands[key].description;
   }).join("\n");
   message.reply(helpReply + descriptions);
 }
@@ -36,11 +36,11 @@ function sendError(message: Message) {
 client.on("message", async function (message) {
   // console.log("received a message");
   if (message.author.bot) return;                                         //Verifies that the author of the message is not a bot
-  if (!message.content.startsWith(prefix)) return;                        //Verifies that the message begins with the prefix        
+  if (!message.content.startsWith(BOT_PREFIX)) return;                        //Verifies that the message begins with the prefix        
 
-  const commandBody = message.content.slice(prefix.length);               //Removes prefix from message content
+  const commandBody = message.content.slice(BOT_PREFIX.length);               //Removes prefix from message content
   const args = commandBody.split(" ");                                    //Results in an array containing command name (and potential arguments)  
-  const command = args.shift()?.toLowerCase();                            //Removes first element from args array (command name). Leaves only arguments in the array
+  const command = args.shift()?.toLowerCase().trim();                            //Removes first element from args array (command name). Leaves only arguments in the array
   if (!command)
     return;
 
