@@ -2,8 +2,7 @@
 
 import { Message } from "discord.js";
 import { client } from "./app";
-import { getIeeeEvents } from "./helpers/rest";
-import { formatEvents } from "./helpers/ieeeEvent";
+import { getIeeeEvents, formatEvents } from "./helpers/ieeeEvent";
 
 export const BOT_PREFIX = process.env.BOT_PREFIX || "!";                             //Sets the prefix
 
@@ -14,40 +13,48 @@ const commands: { [command: string]: { description: string, func: Function } } =
 
 async function getEvents(message: Message) {
   const eventList = await getIeeeEvents();
-  if (eventList) // TODO handle eror states
-    message.reply(`Request Received:\n ${formatEvents(eventList)}`);
-  else
-    sendError(message);
+  if (eventList) {
+    return `${formatEvents(eventList)}`;
+  }
+  else {
+    return sendError(message);
+  }
 }
 
-function getHelp(message: Message) {
-
+function getHelp() {
   const helpReply = "**Here are some recognized commands**\n";
   const descriptions = Object.keys(commands).map((key) => {
     return "**" + BOT_PREFIX + key + "**: " + commands[key].description;
   }).join("\n");
-  message.reply(helpReply + descriptions);
+  return helpReply + descriptions;
 }
 
 function sendError(message: Message) {
-  message.reply("Something went wrong. @Forge - Bot is on it.");
+  console.warn("[error]", message);
+  return "Something went wrong. <@&758053725943103536> is on it.";
 }
 
 client.on("message", async function (message) {
-  // console.log("received a message");
-  if (message.author.bot) return;                                         //Verifies that the author of the message is not a bot
-  if (!message.content.startsWith(BOT_PREFIX)) return;                        //Verifies that the message begins with the prefix        
+  try {
 
-  const commandBody = message.content.slice(BOT_PREFIX.length).trim();               //Removes prefix from message content
-  const args = commandBody.split(" ");                                    //Results in an array containing command name (and potential arguments)  
-  const command = args.shift()?.toLowerCase();                            //Removes first element from args array (command name). Leaves only arguments in the array
-  if (!command)
-    return;
+    // console.log("received a message");
+    if (message.author.bot) return;                                         //Verifies that the author of the message is not a bot
+    if (!message.content.startsWith(BOT_PREFIX)) return;                        //Verifies that the message begins with the prefix        
 
-  const commandObj = commands[command];
-  if (commandObj) {
-    await commandObj.func(message, ...args);
-  } else {
-    message.reply("Command not recognized, please try again or type !help for more");
+    const commandBody = message.content.slice(BOT_PREFIX.length).trim();               //Removes prefix from message content
+    const args = commandBody.split(" ");                                    //Results in an array containing command name (and potential arguments)  
+    const command = args.shift()?.toLowerCase();                            //Removes first element from args array (command name). Leaves only arguments in the array
+    if (!command)
+      return;
+
+    const commandObj = commands[command];
+    if (commandObj) {
+      const mes = await commandObj.func(message, ...args);
+      message.channel.send(mes);
+    } else {
+      message.channel.send("Command not recognized, please try again or type !help for more");
+    }
+  } catch (e) {
+    message.channel.send(sendError(e));
   }
 });
