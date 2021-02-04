@@ -51,9 +51,10 @@ client.on("message", async function (message) {
     if (commandObj) {
       const mes = await commandObj.func(message, ...args);
       message.channel.send(mes);
-    } else {
-      message.channel.send("Command not recognized, please try again or type !help for more");
     }
+    // else {
+    // message.channel.send("Command not recognized, please try again or type !help for more");
+    // }
   } catch (e) {
     message.channel.send(sendError(e));
   }
