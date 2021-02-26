@@ -50,7 +50,7 @@ client.on("message", async function (message) {
     const commandObj = commands[command];
     if (commandObj) {
       const mes = await commandObj.func(message, ...args);
-      message.channel.send(mes);
+      message.channel.send(mes + "\n\nHelp build the IEEE Bot at <https://github.com/ieee-utd/project-bot>");
     } else {
       message.channel.send("Command not recognized, please try again or type !help for more");
     }
