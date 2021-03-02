@@ -1,4 +1,4 @@
-if(!process.env.BOT_TOKEN) require("dotenv").config();
+require("dotenv").config();
 import * as Discord from "discord.js";
 import { Settings, DateTime } from "luxon";
 Settings.defaultZoneName = "America/Chicago";
