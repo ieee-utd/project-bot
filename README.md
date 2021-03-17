@@ -14,3 +14,10 @@ An initiative for strengthening IEEE UTD's online setting in response to the COV
 ### Project Status
 As of now, the bot provides organization events upon command with `$events`. An automated approach is needed.
 Auto-logging tutor hours and displaying them for students/members are also needed.
+
+### Setting Up Local Development
+* Install project dependencies by running `yarn install`
+* Add a `.env` file using the `.env.example` template file
+* Start the application by running `yarn start` in your terminal
+
+You're all set for local development! 🎉
